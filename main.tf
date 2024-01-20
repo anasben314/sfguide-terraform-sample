@@ -4,19 +4,27 @@ terraform {
       source  = "Snowflake-Labs/snowflake"
       version = "~> 0.76"
     }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "~> 3.1"
-    }
   }
+}
+
+provider "snowflake" {
+  role = "SYSADMIN"
+}
+
+resource "snowflake_database" "db" {
+  name = "TF_DEMO"
+}
+
+resource "snowflake_warehouse" "warehouse" {
+  name           = "TF_DEMO"
+  warehouse_size = "small"
+  auto_suspend   = 60
 }
 
 provider "snowflake" {
   alias = "security_admin"
   role  = "SECURITYADMIN"
 }
-
-
 
 resource "snowflake_role" "role" {
   provider = snowflake.security_admin
@@ -86,14 +94,4 @@ resource "snowflake_role_grants" "grants" {
   provider  = snowflake.security_admin
   role_name = snowflake_role.role.name
   users     = [snowflake_user.user.name]
-}
-
-resource "snowflake_database" "db" {
-  name = "TF_DEMO"
-}
-
-resource "snowflake_warehouse" "warehouse" {
-  name           = "TF_DEMO"
-  warehouse_size = "large"
-  auto_suspend   = 60
 }
