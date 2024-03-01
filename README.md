@@ -1,3 +1,6 @@
+# Snowflake Configuration Steps
+
+```sh
 # Add Required Provider
 terraform init
 
@@ -32,3 +35,5 @@ GRANT MONITOR ON USER tf_demo_user TO ROLE TF_DEMO_SVC_ROLE;
 
 # Grant Role to User
 GRANT ROLE TF_DEMO_SVC_ROLE TO USER tf_demo_user;
+
+Replace `'your_rsa_public_key_here'` with the actual RSA public key generated. This Markdown content can be saved in a `.md` file and rendered in Markdown viewers or editors to display the steps in a more readable format.
